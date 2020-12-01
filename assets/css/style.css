@@ -1,0 +1,20 @@
+#user-list-table tr.user-row:hover {
+    background-color: #EEE;
+    cursor: pointer;
+}
+
+#user-list-table tr.details {
+    font-size: 1.5rem;
+}
+
+#user-list-table tr.details .preloader {
+    display: block;
+    width: 100%;
+    height: 100px;
+    background: url(../assets/img/preloader.gif);
+    background-repeat: no-repeat;
+}
+
+#user-list-table tr.user-row:hover td {
+    text-decoration: underline;
+}
