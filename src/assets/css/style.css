@@ -19,3 +19,7 @@
 #user-list-table tr.user-row:hover td {
     text-decoration: underline;
 }
+
+.not-found {
+    margin: 4rem 0;
+}

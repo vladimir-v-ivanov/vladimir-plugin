@@ -30,7 +30,7 @@
                     try {
                         var response = JSON.parse(xhr.response);
                     } catch (e) {
-                        // TODO: error
+                        // TODO: error|
                     }
 
                     //if(!response.result)
@@ -43,7 +43,7 @@
                         + '<div>Phone: ' + response.details.phone + '</div></td>';
                 }
 
-                xhr.open('GET', '/user_details?user_id=' + parent.dataset.userId, true);
+                xhr.open('GET', vladimir_plugin_url + '/user_details?user_id=' + parent.dataset.userId, true);
                 xhr.send();
             });
         }
