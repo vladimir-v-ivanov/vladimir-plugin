@@ -1,16 +1,31 @@
 <?php
 
 /**
- *
+ * Test plugin
  */
 class Vladimir_Plugin
 {
     private $query;
+    private $config;
+
+    /**
+     * Get the plugin's config
+     *
+     * @return array
+     */
+    public function get_config()
+    {
+        if(is_null($this->config)) {
+            $this->config = require_once plugin_dir_path(VLADIMIR_PLUGIN_ROOT) . '/config.php';
+        }
+
+        return $this->config;
+    }
 
     /**
      * Get current WP_Query object
      *
-     * @return WP_Query WP_Query object
+     * @return WP_Query wordpress query object
      */
     public function get_query()
     {
@@ -20,7 +35,7 @@ class Vladimir_Plugin
     /**
      * Set current WP_Query object for future use in the plugin
      *
-     * @param WP_Query $query WP_Query object
+     * @param WP_Query wordpress query object
      */
     public function set_query($query)
     {
@@ -28,7 +43,7 @@ class Vladimir_Plugin
     }
 
     /**
-     *
+     * Run the plugin routine
      */
     public function run()
     {
@@ -36,6 +51,47 @@ class Vladimir_Plugin
         add_action('template_redirect', [$this, 'set_status']);
         add_action('parse_query', [$this, 'set_query']);
         add_filter('query_vars', [$this, 'set_query_vars']);
+        add_filter('the_title', [$this, 'set_title']);
+        add_filter('document_title_parts', [$this, 'set_document_title']);
+    }
+
+    /**
+     * Set WordPress document title parts
+     *
+     * This function actually sets custom browser title for the user list page
+     *
+     * @param array title parts
+     *
+     * @return array modified title parts
+     */
+    function set_document_title($title)
+    {
+        if($this->is_user_list_request()) {
+            $title = [
+                'title' => get_bloginfo('name'),
+                'tagline' => $this->get_config()['page_title']
+            ];
+        }
+
+        return $title;
+    }
+
+    /**
+     * Set title for page contents
+     *
+     * This function actually sets custom page title for the user list page
+     *
+     * @param string current title
+     *
+     * @return string modified title
+     */
+    public function set_title($title)
+    {
+        if($this->is_user_list_request()) {
+            $title = $this->get_config()['page_title'];
+        }
+
+        return $title;
     }
 
     /**
@@ -66,6 +122,9 @@ class Vladimir_Plugin
     {
         if($this->is_user_list_request()) {
             $template = plugin_dir_path(VLADIMIR_PLUGIN_ROOT) . 'views/' . VLADIMIR_PLUGIN_LIST_TEMPLATE;
+
+            wp_enqueue_script('vladimir_plugin_script', plugin_dir_url(VLADIMIR_PLUGIN_ROOT) . '/assets/js/script.js');
+            wp_enqueue_style('vladimir_plugin_style', plugin_dir_url(VLADIMIR_PLUGIN_ROOT) . '/assets/css/style.css');
         }
 
         if($this->is_user_details_request()) {
@@ -88,7 +147,9 @@ class Vladimir_Plugin
     }
 
     /**
+     * Get list of the users
      *
+     * @return array Returns array of the existing users on success or empty array on fail
      */
     public function get_user_list()
     {
@@ -114,7 +175,11 @@ class Vladimir_Plugin
     }
 
     /**
+     * Get user details data in AJAX format
      *
+     * @param int User ID
+     *
+     * @return array Returns array of user data on success or empty array on fail
      */
     public function get_user_details($user_id)
     {
@@ -141,7 +206,9 @@ class Vladimir_Plugin
     }
 
     /**
+     * Check if requested URL is for the user list page
      *
+     * @return true
      */
     private function is_user_list_request()
     {
@@ -149,7 +216,9 @@ class Vladimir_Plugin
     }
 
     /**
+     * Check if requested URL is for the user details data
      *
+     * @return true
      */
     private function is_user_details_request()
     {
