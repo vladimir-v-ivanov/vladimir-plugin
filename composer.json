@@ -18,7 +18,10 @@
         },
         {
             "type": "path",
-            "url": "./src"
+            "url": "./src",
+            "options": {
+                "symlink": false
+            }
         }
     ],
     "require": {
