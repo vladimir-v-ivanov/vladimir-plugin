@@ -1,6 +1,38 @@
 {
-    "name": "vladimir/vladimir-plugin",
-    "description": "Vladimir Plugin",
-    "type": "wordpress-plugin",
-    "version": "1.0"
+    "name": "vladimir/vladimir-plugin-library",
+    "description": "Test wordpress plugin",
+    "type": "library",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vladimir Ivanov",
+            "email": "vladimir@ivanov.click",
+            "role": "Developer"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://wpackagist.org"
+        },
+        {
+            "type": "path",
+            "url": "./src"
+        }
+    ],
+    "require": {
+        "johnpbloch/wordpress": "^5.5.3",
+        "composer/installers": "~1.0",
+        "vladimir/vladimir-plugin": "^1.0"
+    },
+    "extra": {
+        "wordpress-install-dir": "wp",
+        "wordpress-content-dir": "content",
+        "installer-paths": {
+            "wp/wp-content/plugins/{$name}": [
+                "type:wordpress-plugin"
+            ]
+        }
+    }
 }

@@ -1,0 +1,6 @@
+{
+    "name": "vladimir/vladimir-plugin",
+    "description": "Vladimir Plugin",
+    "type": "wordpress-plugin",
+    "version": "1.0"
+}

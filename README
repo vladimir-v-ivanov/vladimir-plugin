@@ -1,1 +1,0 @@
-Here is used no links <a> in table because I think it is not necessary. The only reason to use links in my opinion is to catch some user action (click) and send AJAX request. So I think to catch a user click without <a> tags much more easier in JavaScript
