@@ -30,11 +30,14 @@
                     try {
                         var response = JSON.parse(xhr.response);
                     } catch (e) {
-                        // TODO: error|
+                        newDetails.innerHTML = '<td colspan="3">'+ vladimirPluginData.errorText +'</td>';
+                        return;
                     }
 
-                    //if(!response.result)
-                        // TODO: error
+                    if(!response.result) {
+                        newDetails.innerHTML = '<td colspan="3">'+ vladimirPluginData.errorText +'</td>';
+                        return;
+                    }
 
                     newDetails.innerHTML = '<td colspan="3"><div>ID: ' + response.details.id + '</div>'
                         + '<div>Name: ' + response.details.name + '</div>'
@@ -43,7 +46,12 @@
                         + '<div>Phone: ' + response.details.phone + '</div></td>';
                 }
 
-                xhr.open('GET', vladimir_plugin_url + '/user_details?user_id=' + parent.dataset.userId, true);
+                xhr.open(
+                    'GET',
+                    vladimirPluginData.url + '?action=' + vladimirPluginData.action + '&user_id='
+                        + parent.dataset.userId,
+                    true
+                );
                 xhr.send();
             });
         }

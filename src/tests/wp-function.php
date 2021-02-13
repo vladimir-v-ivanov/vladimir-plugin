@@ -55,3 +55,7 @@ function wp_remote_retrieve_body()
 {
     return $GLOBALS['wp_remote_body'];
 }
+
+function wp_send_json( $array ) {
+    echo json_encode( $array );
+}
