@@ -213,7 +213,8 @@ class Vladimir_Plugin
      */
     private function is_user_list_request()
     {
-        return urldecode( $this->get_query()->get('name') ) == VALDIMIR_PLUGIN_LIST_URL;
+        return urldecode( $this->get_query()->get('name') ) == VALDIMIR_PLUGIN_LIST_URL
+            || urldecode( $this->get_query()->query['p'] ) == VALDIMIR_PLUGIN_LIST_URL;
     }
 
     /**
